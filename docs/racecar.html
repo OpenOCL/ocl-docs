@@ -230,7 +230,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   ts = time(2)-time(1);
   x_car = solution.states.x.value;
   y_car = solution.states.y.value;
-</pre><img vspace="5" hspace="5" src="racecar_01.png" alt=""> <h2 id="3">Initialize animation</h2><pre class="codeinput">  figure(<span class="string">'units'</span>,<span class="string">'normalized'</span>);hold <span class="string">on</span>;grid <span class="string">on</span>;
+</pre><h2 id="3">Initialize animation</h2><pre class="codeinput">  figure(<span class="string">'units'</span>,<span class="string">'normalized'</span>);hold <span class="string">on</span>;grid <span class="string">on</span>;
   car = plot(x_car(1),y_car(1),<span class="string">'Marker'</span>,<span class="string">'pentagram'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'k'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'y'</span>,<span class="string">'MarkerSize'</span>,15);
   carLine = plot(x_car(1),y_car(1),<span class="string">'Color'</span>,<span class="string">'b'</span>,<span class="string">'LineWidth'</span>,3);
   plot(x_road,y_center,<span class="string">'Color'</span>,<span class="string">'k'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'LineStyle'</span>,<span class="string">'--'</span>);
@@ -241,7 +241,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   pause(ts)
 
   snap_at = floor(linspace(2,length(time),4));
-</pre><img vspace="5" hspace="5" src="racecar_02.png" alt=""> <pre class="codeinput">  <span class="keyword">for</span> k = 2:1:length(time)
+</pre><img vspace="5" hspace="5" src="racecar_01.png" alt=""> <img vspace="5" hspace="5" src="racecar_02.png" alt=""> <pre class="codeinput">  <span class="keyword">for</span> k = 2:1:length(time)
     set(carLine, <span class="string">'XData'</span> , x_car(1:k));
     set(carLine, <span class="string">'YData'</span> , y_car(1:k));
     set(car    , <span class="string">'XData'</span> , x_car(k));
@@ -251,7 +251,6 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
       pause(ts);
     <span class="keyword">end</span>
 
-    drawnow;
     <span class="comment">% record image for docs</span>
     <span class="keyword">if</span> k == snap_at(1)
       snapnow;
@@ -382,17 +381,17 @@ Number of inequality constraint evaluations          = 78
 Number of equality constraint Jacobian evaluations   = 78
 Number of inequality constraint Jacobian evaluations = 78
 Number of Lagrangian Hessian evaluations             = 77
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.734
-Total CPU secs in NLP function evaluations           =      0.018
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.754
+Total CPU secs in NLP function evaluations           =      0.030
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.753        0.753         1
-       nlp_f            0            0        78
-       nlp_g        0.006      0.00601        78
-  nlp_grad_f            0            0        79
-  nlp_hess_l        0.004      0.00401        77
-   nlp_jac_g        0.008        0.008        79
+   my_solver        0.785        0.785         1
+       nlp_f        0.002        0.002        78
+       nlp_g        0.002      0.00196        78
+  nlp_grad_f        0.001      0.00155        79
+  nlp_hess_l        0.005      0.00502        77
+   nlp_jac_g        0.018       0.0181        79
 
 ans = 
 
@@ -598,7 +597,6 @@ function animate(time,solution,x_road,y_center,y_min,y_max)
       pause(ts);
     end
     
-    drawnow;
     % record image for docs
     if k == snap_at(1)
       snapnow;

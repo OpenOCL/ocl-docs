@@ -4,24 +4,26 @@ testRun = true;
 
 oclPath  = fileparts(which('ocl'));
 
-publish('ocl.examples.vanderpol')
+assert( exist(fullfile(oclPath,'.git'), 'dir') > 0, 'Only works for a git repo version of OpenOCL. Remove other ocl version from path.')
+
+publish('ocl.examples.vanderpol');
 close all
-publish('ocl.examples.ballandbeam')
+publish('ocl.examples.ballandbeam');
 close all
-publish('ocl.examples.cartpole')
+publish('ocl.examples.cartpole');
 close all
-publish('ocl.examples.racecar')
+publish('ocl.examples.racecar');
 close all
-publish('ocl.examples.bouncingball')
+publish('ocl.examples.bouncingball');
 close all
-publish('ocl.examples.pendulum_sim')
+publish('ocl.examples.pendulum_sim');
 close all
-publish('ocl.examples.bouncingball_sim')
+publish('ocl.examples.bouncingball_sim');
 close all
 
-publish('index')
+publish('index');
 close all
-publish('examples')
+publish('examples');
 close all
 
 copyfile(fullfile(oclPath,'+ocl','+examples','html','*'), 'html')

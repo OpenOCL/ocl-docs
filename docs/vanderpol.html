@@ -97,7 +97,6 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   xlabel(<span class="string">'time'</span>)
   legend({<span class="string">'x'</span>,<span class="string">'y'</span>,<span class="string">'u'</span>})
 
-  drawnow;
   snapnow;
 <span class="keyword">end</span>
 
@@ -173,15 +172,15 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 15
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 14
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.026
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.022
 Total CPU secs in NLP function evaluations           =      0.001
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.028        0.028         1
+   my_solver        0.023        0.023         1
        nlp_f            0            0        15
        nlp_g            0            0        15
-  nlp_grad_f            0            0        16
+  nlp_grad_f        0.001     0.000954        16
   nlp_hess_l            0            0        14
    nlp_jac_g            0            0        16
 </pre><img vspace="5" hspace="5" src="vanderpol_01.png" alt=""> <pre class="codeoutput">
@@ -230,7 +229,6 @@ function [solution,times,solver] = vanderpol
   xlabel('time')
   legend({'x','y','u'})
 
-  drawnow;
   snapnow;
 end
 

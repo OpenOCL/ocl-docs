@@ -206,7 +206,6 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
       pause(times(i)-times(i-1));
     <span class="keyword">end</span>
 
-    drawnow
     <span class="keyword">if</span> i == snap_at(1)
       snapnow;
       snap_at = snap_at(2:end);
@@ -288,14 +287,14 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 35
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 34
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.238
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.233
 Total CPU secs in NLP function evaluations           =      0.011
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.249        0.249         1
-       nlp_f        0.002        0.002        51
-       nlp_g        0.004      0.00398        51
+   my_solver        0.245        0.245         1
+       nlp_f            0            0        51
+       nlp_g        0.006        0.006        51
   nlp_grad_f            0            0        36
   nlp_hess_l        0.002        0.002        34
    nlp_jac_g        0.003        0.003        36
@@ -454,7 +453,6 @@ function bbanimate(times,rTrajectory,thetaTrajectory,c)
       pause(times(i)-times(i-1));
     end
 
-    drawnow
     if i == snap_at(1)
       snapnow;
       snap_at = snap_at(2:end);
