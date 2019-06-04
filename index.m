@@ -28,12 +28,12 @@
 %
 % <html>
 % <ul>
-%   <li><a href="ballandbeam.html">Balancing a ball on a beam</a></li>
-%   <li><a href="bouncingball.html">Bouncing ball</a> (multi-stage)</li>
-%   <li><a href="cartpole.html">Cartpole swingup</a></li>
-%   <li><a href="pendulum_sim.html">Pendulum simulation in cartesian corrdinates</a></li>
-%   <li><a href="racecar.html">Optimal taking turns with a race-car</a></li>
-%   <li><a href="vanderpol.html">Van der Pol oszillator</a></li>
+%   <li><a href="https://openocl.org/ocl-docs-matlab/ballandbeam.html">Balancing a ball on a beam</a></li>
+%   <li><a href="https://openocl.org/ocl-docs-matlab/bouncingball.html">Bouncing ball</a> (multi-stage)</li>
+%   <li><a href="https://openocl.org/ocl-docs-matlab/cartpole.html">Cartpole swingup</a></li>
+%   <li><a href="https://openocl.org/ocl-docs-matlab/pendulum_sim.html">Pendulum simulation in cartesian corrdinates</a></li>
+%   <li><a href="https://openocl.org/ocl-docs-matlab/racecar.html">Optimal taking turns with a race-car</a></li>
+%   <li><a href="https://openocl.org/ocl-docs-matlab/vanderpol.html">Van der Pol oszillator</a></li>
 % </ul>
 % </html>
 %
@@ -59,16 +59,6 @@
 % </ul>
 % </html>
 %
-%% List of classes
-%
-% <html>
-% <ul>
-%   <li><a href="matlab:open OclSystem">ocl.System</a> (OclSystem)</li>
-%   <li><a href="matlab:open OclOCP">ocl.OCP</a> (OclOCP)</li>
-%   <li><a href="matlab:open OclSolver">ocl.Solver</a> (OclSolver)</li>
-% </ul>
-% </html>
-%
 %% Copyright notice
 %
 % Copyright 2019 Jonas Koenemann, Moritz Diehl, University of Freiburg
@@ -81,12 +71,12 @@
 %
 %% Cartpole example
 %
-% <include>../+ocl/+examples/cartpole.m</include>
+% <include>cartpole_src.m</include>
 %
 ocl.examples.cartpole;
 %
 %% Multi-phase bouncing ball example
 %
-% <include>../+ocl/+examples/bouncingball.m</include>
+% <include>bouncingball_src.m</include>
 %
 ocl.examples.bouncingball;

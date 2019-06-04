@@ -1,3 +1,5 @@
+oclPath  = fileparts(which('ocl'));
+
 publish('index')
 publish('examples')
 
@@ -9,8 +11,6 @@ publish('ocl.examples.bouncingball')
 
 publish('ocl.examples.pendulum_sim')
 publish('ocl.examples.bouncingball_sim')
-
-oclPath  = fileparts(which('ocl'));
 
 copyfile(fullfile(oclPath,'+ocl','+examples','html','*'), 'html')
 rmdir(fullfile(oclPath,'+ocl','+examples','html'),'s')
