@@ -68,8 +68,8 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
   </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> [sol,times,solver] = bouncingball
 
-  before_contact = ocl.Phase([], @before_contact_vars, @before_contact_ode, <span class="string">'N'</span>, 3, <span class="string">'d'</span>, 2);
-  after_contact = ocl.Phase(1, @after_contact_vars, @after_contact_ode, <span class="keyword">...</span>
+  before_contact = ocl.Stage([], @before_contact_vars, @before_contact_ode, <span class="string">'N'</span>, 3, <span class="string">'d'</span>, 2);
+  after_contact = ocl.Stage(1, @after_contact_vars, @after_contact_ode, <span class="keyword">...</span>
                             @after_contact_cost, <span class="string">'N'</span>, 5, <span class="string">'d'</span>, 2);
 
   before_contact.setInitialStateBounds(<span class="string">'s'</span>, 1);
@@ -78,14 +78,14 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
   after_contact.setEndStateBounds(<span class="string">'s'</span>, 1);
 
-  solver = OclSolver({before_contact, after_contact}, {@phase_transition});
+  solver = OclSolver({before_contact, after_contact}, {@stage_transition});
 
   [sol,times] = solver.solve(solver.getInitialGuess());
 
   figure
   spy(full(solver.jacobian_pattern(sol)))
 
-  <span class="comment">% phase 1</span>
+  <span class="comment">% stage 1</span>
   figure;
   subplot(1,2,1)
   hold <span class="string">on</span>; grid <span class="string">on</span>;
@@ -95,9 +95,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   xlabel(<span class="string">'time [s]'</span>);
   ylim([-5 3])
   yticks(-5:3)
-  title(<span class="string">'phase 1'</span>)
+  title(<span class="string">'stage 1'</span>)
 
-  <span class="comment">% phase 2</span>
+  <span class="comment">% stage 2</span>
   subplot(1,2,2)
   hold <span class="string">on</span>; grid <span class="string">on</span>;
   oclPlot(times{2}.states, sol{2}.states.s)
@@ -107,7 +107,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   xlabel(<span class="string">'time [s]'</span>);
   ylim([-5 3])
   yticks(-5:3)
-  title(<span class="string">'phase 2'</span>)
+  title(<span class="string">'stage 2'</span>)
 
 <span class="keyword">end</span>
 
@@ -136,9 +136,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   ch.add( u.F^2 );
 <span class="keyword">end</span>
 
-<span class="keyword">function</span> phase_transition(ch, x0, xF)
-  <span class="comment">% x0 current phase</span>
-  <span class="comment">% xF previous phase</span>
+<span class="keyword">function</span> stage_transition(ch, x0, xF)
+  <span class="comment">% x0 current stage</span>
+  <span class="comment">% xF previous stage</span>
   ch.add(x0.s, <span class="string">'=='</span>, xF.s);
   ch.add(x0.v, <span class="string">'=='</span>, -xF.v/2);
 <span class="keyword">end</span>
@@ -187,12 +187,12 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 9
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 8
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.009
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.016
 Total CPU secs in NLP function evaluations           =      0.000
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver         0.01      0.00992         1
+   my_solver        0.016       0.0156         1
        nlp_f            0            0         9
        nlp_g            0            0         9
   nlp_grad_f            0            0        10
@@ -221,8 +221,8 @@ Variable:
 ##### SOURCE BEGIN #####
 function [sol,times,solver] = bouncingball  
   
-  before_contact = ocl.Phase([], @before_contact_vars, @before_contact_ode, 'N', 3, 'd', 2);
-  after_contact = ocl.Phase(1, @after_contact_vars, @after_contact_ode, ...
+  before_contact = ocl.Stage([], @before_contact_vars, @before_contact_ode, 'N', 3, 'd', 2);
+  after_contact = ocl.Stage(1, @after_contact_vars, @after_contact_ode, ...
                             @after_contact_cost, 'N', 5, 'd', 2);
 
   before_contact.setInitialStateBounds('s', 1);
@@ -231,14 +231,14 @@ function [sol,times,solver] = bouncingball
   
   after_contact.setEndStateBounds('s', 1);
 
-  solver = OclSolver({before_contact, after_contact}, {@phase_transition});
+  solver = OclSolver({before_contact, after_contact}, {@stage_transition});
 
   [sol,times] = solver.solve(solver.getInitialGuess());
 
   figure
   spy(full(solver.jacobian_pattern(sol)))
   
-  % phase 1
+  % stage 1
   figure; 
   subplot(1,2,1)
   hold on; grid on;
@@ -248,9 +248,9 @@ function [sol,times,solver] = bouncingball
   xlabel('time [s]');
   ylim([-5 3])
   yticks(-5:3)
-  title('phase 1')
+  title('stage 1')
   
-  % phase 2
+  % stage 2
   subplot(1,2,2)
   hold on; grid on;
   oclPlot(times{2}.states, sol{2}.states.s)
@@ -260,7 +260,7 @@ function [sol,times,solver] = bouncingball
   xlabel('time [s]');
   ylim([-5 3])
   yticks(-5:3)
-  title('phase 2')
+  title('stage 2')
 
 end
 
@@ -289,9 +289,9 @@ function after_contact_cost(ch,~,~,u,~)
   ch.add( u.F^2 );
 end
 
-function phase_transition(ch, x0, xF)
-  % x0 current phase
-  % xF previous phase
+function stage_transition(ch, x0, xF)
+  % x0 current stage
+  % xF previous stage
   ch.add(x0.s, '==', xF.s);
   ch.add(x0.v, '==', -xF.v/2);
 end

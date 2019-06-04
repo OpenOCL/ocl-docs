@@ -120,7 +120,17 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   ch.add( x.y^2 );
   ch.add( u.F^2 );
 <span class="keyword">end</span>
-</pre><pre class="codeoutput">This is Ipopt version 3.12.3, running with linear solver mumps.
+</pre><pre class="codeoutput">Running OpenOCL setup procedure. This may required your input, and may take a while at the first time.
+CasADi is up and running!
+OpenOCL startup procedure finished successfully.
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+******************************************************************************
+
+This is Ipopt version 3.12.3, running with linear solver mumps.
 NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
 
 Number of nonzeros in equality constraint Jacobian...:     1282
@@ -172,15 +182,15 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 15
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 14
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.022
-Total CPU secs in NLP function evaluations           =      0.001
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.031
+Total CPU secs in NLP function evaluations           =      0.000
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.023        0.023         1
+   my_solver        0.031       0.0313         1
        nlp_f            0            0        15
        nlp_g            0            0        15
-  nlp_grad_f        0.001     0.000954        16
+  nlp_grad_f            0            0        16
   nlp_hess_l            0            0        14
    nlp_jac_g            0            0        16
 </pre><img vspace="5" hspace="5" src="vanderpol_01.png" alt=""> <pre class="codeoutput">

@@ -256,8 +256,6 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
       snapnow;
       snap_at = snap_at(2:end);
     <span class="keyword">end</span>
-
-
   <span class="keyword">end</span>
 </pre><img vspace="5" hspace="5" src="racecar_03.png" alt=""> <img vspace="5" hspace="5" src="racecar_04.png" alt=""> <img vspace="5" hspace="5" src="racecar_05.png" alt=""> <img vspace="5" hspace="5" src="racecar_06.png" alt=""> <pre class="codeinput"><span class="keyword">end</span>
 </pre><pre class="codeoutput">This is Ipopt version 3.12.3, running with linear solver mumps.
@@ -381,17 +379,17 @@ Number of inequality constraint evaluations          = 78
 Number of equality constraint Jacobian evaluations   = 78
 Number of inequality constraint Jacobian evaluations = 78
 Number of Lagrangian Hessian evaluations             = 77
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.754
-Total CPU secs in NLP function evaluations           =      0.030
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.771
+Total CPU secs in NLP function evaluations           =      0.031
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.785        0.785         1
-       nlp_f        0.002        0.002        78
-       nlp_g        0.002      0.00196        78
-  nlp_grad_f        0.001      0.00155        79
-  nlp_hess_l        0.005      0.00502        77
-   nlp_jac_g        0.018       0.0181        79
+   my_solver        0.802        0.803         1
+       nlp_f            0            0        78
+       nlp_g        0.001        0.001        78
+  nlp_grad_f            0            0        79
+  nlp_hess_l            0            0        77
+   nlp_jac_g         0.03       0.0313        79
 
 ans = 
 
@@ -602,8 +600,6 @@ function animate(time,solution,x_road,y_center,y_min,y_max)
       snapnow;
       snap_at = snap_at(2:end);
     end
-    
-
   end
 end
 
