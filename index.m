@@ -22,7 +22,7 @@
 % 
 %% Get help from the command line
 %
-% <a href="matlab:help ocl">help ocl</a>
+% <html><a href="matlab:help ocl">help ocl</a></html>
 %
 %% Examples
 %
