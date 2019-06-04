@@ -172,7 +172,6 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
     handles = draw(t, dt, x, [0,0,0,0], pmax, handles);
 
-    drawnow;
     <span class="comment">% record image for docs</span>
     <span class="keyword">if</span> k == snap_at(1)
       snapnow;
@@ -390,17 +389,17 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 105
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 101
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.441
-Total CPU secs in NLP function evaluations           =      0.018
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.460
+Total CPU secs in NLP function evaluations           =      0.025
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.459        0.459         1
+   my_solver        0.486        0.485         1
        nlp_f            0            0       137
-       nlp_g            0            0       137
-  nlp_grad_f            0            0        83
-  nlp_hess_l        0.002      0.00201        98
-   nlp_jac_g        0.016       0.0156       106
+       nlp_g        0.005      0.00496       137
+  nlp_grad_f        0.002        0.002        83
+  nlp_hess_l         0.01      0.00972        98
+   nlp_jac_g        0.008       0.0081       106
 </pre><img vspace="5" hspace="5" src="cartpole_01.png" alt=""> <img vspace="5" hspace="5" src="cartpole_02.png" alt=""> <img vspace="5" hspace="5" src="cartpole_03.png" alt=""> <img vspace="5" hspace="5" src="cartpole_04.png" alt=""> <img vspace="5" hspace="5" src="cartpole_05.png" alt=""> <pre class="codeoutput">
 ans = 
 
@@ -522,7 +521,6 @@ function handles = animate(sol,times,snap)
     
     handles = draw(t, dt, x, [0,0,0,0], pmax, handles);
     
-    drawnow;
     % record image for docs
     if k == snap_at(1)
       snapnow;

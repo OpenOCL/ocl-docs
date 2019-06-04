@@ -41,6 +41,5 @@ copyfile(fullfile('docs','index_04.png'), fullfile(oclPath,'doc','index_04.png')
 copyfile(fullfile('docs','index_05.png'), fullfile(oclPath,'doc','index_05.png'))
 copyfile(fullfile('docs','index_06.png'), fullfile(oclPath,'doc','index_06.png'))
 copyfile(fullfile('docs','index_07.png'), fullfile(oclPath,'doc','index_07.png'))
-copyfile(fullfile('docs','index_08.png'), fullfile(oclPath,'doc','index_08.png'))
 
 testRun = false;
