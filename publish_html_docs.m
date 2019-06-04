@@ -34,5 +34,13 @@ copyfile(fullfile('html','*'), 'docs')
 rmdir('html','s')
 
 copyfile(fullfile('docs','index.html'), fullfile(oclPath,'doc','index.html'))
+copyfile(fullfile('docs','index_01.png'), fullfile(oclPath,'doc','index_01.png'))
+copyfile(fullfile('docs','index_02.png'), fullfile(oclPath,'doc','index_02.png'))
+copyfile(fullfile('docs','index_03.png'), fullfile(oclPath,'doc','index_03.png'))
+copyfile(fullfile('docs','index_04.png'), fullfile(oclPath,'doc','index_04.png'))
+copyfile(fullfile('docs','index_05.png'), fullfile(oclPath,'doc','index_05.png'))
+copyfile(fullfile('docs','index_06.png'), fullfile(oclPath,'doc','index_06.png'))
+copyfile(fullfile('docs','index_07.png'), fullfile(oclPath,'doc','index_07.png'))
+copyfile(fullfile('docs','index_08.png'), fullfile(oclPath,'doc','index_08.png'))
 
 testRun = false;
