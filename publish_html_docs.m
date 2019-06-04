@@ -1,4 +1,4 @@
-publish('getting_started')
+publish('index')
 publish('examples')
 
 publish('ocl.examples.vanderpol')
@@ -15,4 +15,7 @@ oclPath  = fileparts(which('ocl'));
 copyfile(fullfile(oclPath,'+ocl','+examples','html','*'), 'html')
 rmdir(fullfile(oclPath,'+ocl','+examples','html'),'s')
 
-copyfile(fullfile(oclPath,'doc','helptoc.xml'), fullfile(oclPath,'doc','html','helptoc.xml'));
+copyfile(fullfile(oclPath,'doc','helptoc.xml'), fullfile('html','helptoc.xml'));
+
+copyfile(fullfile('html','*'), 'docs')
+rmdir('html','s')
