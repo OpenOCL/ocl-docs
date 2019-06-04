@@ -97,6 +97,8 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   xlabel(<span class="string">'time'</span>)
   legend({<span class="string">'x'</span>,<span class="string">'y'</span>,<span class="string">'u'</span>})
 
+  drawnow;
+  snapnow;
 <span class="keyword">end</span>
 
 <span class="keyword">function</span> varsfun(svh)
@@ -171,18 +173,18 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 15
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 14
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.032
-Total CPU secs in NLP function evaluations           =      0.000
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.015
+Total CPU secs in NLP function evaluations           =      0.016
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.032       0.0312         1
+   my_solver        0.031       0.0312         1
        nlp_f            0            0        15
-       nlp_g            0            0        15
+       nlp_g        0.016       0.0156        15
   nlp_grad_f            0            0        16
   nlp_hess_l            0            0        14
    nlp_jac_g            0            0        16
-
+</pre><img vspace="5" hspace="5" src="vanderpol_01.png" alt=""> <pre class="codeoutput">
 ans = 
 
 OclAssignment with content:
@@ -195,7 +197,7 @@ Variable:
   Value: [0;1;-0.039132;0.998989;-0.161676;0.982567;-0.249267;0.958239;0.243403;0.333333;-0.249267;0.958239;-0.25;0.945337;-0.25;0.904462;-0.247692;0.874991;0.961065;0.333333;-0.247692;0.874991;-0.248835;0.862...
 
 }
-</pre><img vspace="5" hspace="5" src="vanderpol_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 % Copyright 2019 Jonas Koenemann, Moritz Diehl, University of Freiburg
 % Copyright 2015-2018 Jonas Koennemanm, Giovanni Licitra
@@ -228,6 +230,8 @@ function [solution,times,solver] = vanderpol
   xlabel('time')
   legend({'x','y','u'})
 
+  drawnow;
+  snapnow;
 end
 
 function varsfun(svh)

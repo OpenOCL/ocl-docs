@@ -172,6 +172,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
     handles = draw(t, dt, x, [0,0,0,0], pmax, handles);
 
+    drawnow;
     <span class="comment">% record image for docs</span>
     <span class="keyword">if</span> k == snap_at(1)
       snapnow;
@@ -389,18 +390,18 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 105
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 101
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.508
-Total CPU secs in NLP function evaluations           =      0.017
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.496
+Total CPU secs in NLP function evaluations           =      0.001
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver         0.54         0.54         1
+   my_solver        0.497        0.497         1
        nlp_f            0            0       137
-       nlp_g        0.016       0.0166       137
+       nlp_g            0            0       137
   nlp_grad_f            0            0        83
-  nlp_hess_l            0      0.00042        98
+  nlp_hess_l        0.001      0.00106        98
    nlp_jac_g            0            0       106
-</pre><img vspace="5" hspace="5" src="cartpole_01.png" alt=""> <img vspace="5" hspace="5" src="cartpole_02.png" alt=""> <img vspace="5" hspace="5" src="cartpole_03.png" alt=""> <img vspace="5" hspace="5" src="cartpole_04.png" alt=""> <img vspace="5" hspace="5" src="cartpole_05.png" alt=""> <img vspace="5" hspace="5" src="cartpole_06.png" alt=""> <pre class="codeoutput">
+</pre><img vspace="5" hspace="5" src="cartpole_01.png" alt=""> <img vspace="5" hspace="5" src="cartpole_02.png" alt=""> <img vspace="5" hspace="5" src="cartpole_03.png" alt=""> <img vspace="5" hspace="5" src="cartpole_04.png" alt=""> <img vspace="5" hspace="5" src="cartpole_05.png" alt=""> <pre class="codeoutput">
 ans = 
 
 OclAssignment with content:
@@ -521,6 +522,7 @@ function handles = animate(sol,times,snap)
     
     handles = draw(t, dt, x, [0,0,0,0], pmax, handles);
     
+    drawnow;
     % record image for docs
     if k == snap_at(1)
       snapnow;

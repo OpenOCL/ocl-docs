@@ -247,17 +247,18 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
     set(car    , <span class="string">'XData'</span> , x_car(k));
     set(car    , <span class="string">'YData'</span> , y_car(k));
 
-    drawnow
+    <span class="keyword">if</span> isempty(isTestRun) || (isTestRun==false)
+      pause(ts);
+    <span class="keyword">end</span>
 
+    drawnow;
     <span class="comment">% record image for docs</span>
     <span class="keyword">if</span> k == snap_at(1)
       snapnow;
       snap_at = snap_at(2:end);
     <span class="keyword">end</span>
 
-    <span class="keyword">if</span> isempty(isTestRun) || (isTestRun==false)
-      pause(ts);
-    <span class="keyword">end</span>
+
   <span class="keyword">end</span>
 </pre><img vspace="5" hspace="5" src="racecar_03.png" alt=""> <img vspace="5" hspace="5" src="racecar_04.png" alt=""> <img vspace="5" hspace="5" src="racecar_05.png" alt=""> <img vspace="5" hspace="5" src="racecar_06.png" alt=""> <pre class="codeinput"><span class="keyword">end</span>
 </pre><pre class="codeoutput">This is Ipopt version 3.12.3, running with linear solver mumps.
@@ -381,17 +382,17 @@ Number of inequality constraint evaluations          = 78
 Number of equality constraint Jacobian evaluations   = 78
 Number of inequality constraint Jacobian evaluations = 78
 Number of Lagrangian Hessian evaluations             = 77
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.812
-Total CPU secs in NLP function evaluations           =      0.047
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.701
+Total CPU secs in NLP function evaluations           =      0.034
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.859        0.858         1
+   my_solver        0.735        0.735         1
        nlp_f            0            0        78
-       nlp_g        0.003        0.003        78
-  nlp_grad_f        0.002        0.002        79
-  nlp_hess_l            0            0        77
-   nlp_jac_g        0.041       0.0402        79
+       nlp_g            0            0        78
+  nlp_grad_f            0            0        79
+  nlp_hess_l        0.016       0.0167        77
+   nlp_jac_g        0.018       0.0176        79
 
 ans = 
 
@@ -593,17 +594,18 @@ function animate(time,solution,x_road,y_center,y_min,y_max)
     set(car    , 'XData' , x_car(k));
     set(car    , 'YData' , y_car(k));
 
-    drawnow
+    if isempty(isTestRun) || (isTestRun==false)
+      pause(ts);
+    end
     
+    drawnow;
     % record image for docs
     if k == snap_at(1)
       snapnow;
       snap_at = snap_at(2:end);
     end
     
-    if isempty(isTestRun) || (isTestRun==false)
-      pause(ts);
-    end
+
   end
 end
 
