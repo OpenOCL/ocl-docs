@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>OpenOCL - Open Optimal Control Library</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-06-04"><meta name="DC.source" content="index.m"><style type="text/css">
+      --><title>cartpole</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-06-04"><meta name="DC.source" content="cartpole.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,37 +66,181 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>OpenOCL - Open Optimal Control Library</h1><!--introduction--><p>Software for optimal control, trajectory optimization, and model predictive control.</p><p>Web: <a href="https://openocl.org/">https://openocl.org/</a></p><p>API docs: <a href="https://openocl.org/api-docs/">https://openocl.org/api-docs/</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Examples</a></li><li><a href="#2">Get help from the command line</a></li><li><a href="#3">Get started</a></li><li><a href="#4">List of optimal control examples</a></li><li><a href="#5">List of simulation examples</a></li><li><a href="#6">List of classes</a></li><li><a href="#7">Copyright notice</a></li><li><a href="#8">Cartpole example</a></li><li><a href="#9">Multi-phase bouncing ball example</a></li></ul></div><h2 id="1">Examples</h2><p>
-<ul>
-  <li><a href="ballandbeam.html">Balancing a ball on a beam</a></li>
-  <li><a href="bouncingball.html">Bouncing ball</a> (multi-stage)</li>
-  <li><a href="cartpole.html">Cartpole swingup</a></li>
-  <li><a href="pendulum_sim.html">Pendulum simulation in cartesian corrdinates</a></li>
-  <li><a href="racecar.html">Optimal taking turns with a race-car</a></li>
-  <li><a href="vanderpol.html">Van der Pol oszillator</a></li>
-</ul>
-</p><h2 id="2">Get help from the command line</h2><p>help ocl</p><h2 id="3">Get started</h2><p>Run an example with:</p><p><a href="matlab:ocl.examples.cartpole">ocl.examples.cartpole</a></p><p>Get a list of all examples:</p><p><a href="matlab:help examples">help examples</a></p><p>Look at example code:</p><p><a href="matlab:open ocl.examples.cartpole">open ocl.examples.cartpole</a></p><h2 id="4">List of optimal control examples</h2><p>
-<ul>
-  <li><a href="matlab:open ocl.examples.vanderpol">ocl.examples.vanderpol</a></li>
-  <li><a href="matlab:open ocl.examples.ballandbeam">ocl.examples.ballandbeam</a></li>
-  <li><a href="matlab:open ocl.examples.pendulum">ocl.examples.pendulum</a></li>
-  <li><a href="matlab:open ocl.examples.racecar">ocl.examples.racecar</a></li>
-  <li><a href="matlab:open ocl.examples.cartpole">ocl.examples.cartpole</a></li>
-  <li><a href="matlab:open ocl.examples.bouncingball">ocl.examples.bouncingball</a> (multi-phase)</li>
-</ul>
-</p><h2 id="5">List of simulation examples</h2><p>
-<ul>
-  <li><a href="matlab:open ocl.examples.pendulum_sim">ocl.examples.pendulum_sim</a></li>
-  <li><a href="matlab:open ocl.examples.bouncingball_sim">ocl.examples.bouncingball_sim</a></li>
-</ul>
-</p><h2 id="6">List of classes</h2><p>
-<ul>
-  <li><a href="matlab:open OclSystem">ocl.System</a> (OclSystem)</li>
-  <li><a href="matlab:open OclOCP">ocl.OCP</a> (OclOCP)</li>
-  <li><a href="matlab:open OclSolver">ocl.Solver</a> (OclSolver)</li>
-</ul>
-</p><h2 id="7">Copyright notice</h2><p>Copyright 2019 Jonas Koenemann, Moritz Diehl, University of Freiburg Redistribution is permitted under the 3-Clause BSD License terms. Please ensure the above copyright notice is visible in any derived work.</p><p>Get the license text from:</p><p><a href="https://openocl.org/bsd-3-clause/">https://openocl.org/bsd-3-clause/</a></p><h2 id="8">Cartpole example</h2><pre class="error">File '../+ocl/+examples/cartpole.m' not found.</pre><pre class="codeinput">ocl.examples.cartpole;
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% Copyright 2019 Jonas Koenemann, Moritz Diehl, University of Freiburg</span>
+<span class="comment">% Redistribution is permitted under the 3-Clause BSD License terms. Please</span>
+<span class="comment">% ensure the above copyright notice is visible in any derived work.</span>
 <span class="comment">%</span>
+<span class="keyword">function</span> [sol,times,solver] = cartpole
+
+  solver = ocl.Solver([], <span class="string">'vars'</span>, @varsfun, <span class="string">'dae'</span>, @daefun, <span class="string">'pointcosts'</span>, @pointcosts, <span class="string">'N'</span>, 40, <span class="string">'d'</span>, 3);
+
+  p0 = 0; v0 = 0;
+  theta0 = 180*pi/180; omega0 = 0;
+
+  solver.setInitialBounds(<span class="string">'p'</span>, p0);
+  solver.setInitialBounds(<span class="string">'v'</span>, v0);
+  solver.setInitialBounds(<span class="string">'theta'</span>, theta0);
+  solver.setInitialBounds(<span class="string">'omega'</span>, omega0);
+
+  solver.setInitialBounds(<span class="string">'time'</span>, 0);
+
+  solver.setEndBounds(<span class="string">'p'</span>, 0);
+  solver.setEndBounds(<span class="string">'v'</span>, 0);
+  solver.setEndBounds(<span class="string">'theta'</span>, 0);
+  solver.setEndBounds(<span class="string">'omega'</span>, 0);
+
+  <span class="comment">% Run solver to obtain solution</span>
+  [sol,times] = solver.solve(solver.ig());
+
+  <span class="comment">% visualize solution</span>
+  figure; hold <span class="string">on</span>; grid <span class="string">on</span>;
+  oclStairs(times.controls, sol.controls.F/10.)
+  xlabel(<span class="string">'time [s]'</span>);
+  oclPlot(times.states, sol.states.p)
+  xlabel(<span class="string">'time [s]'</span>);
+  oclPlot(times.states, sol.states.v)
+  xlabel(<span class="string">'time [s]'</span>);
+  oclPlot(times.states, sol.states.theta)
+  legend({<span class="string">'force [10*N]'</span>,<span class="string">'position [m]'</span>,<span class="string">'velocity [m/s]'</span>,<span class="string">'theta [rad]'</span>})
+  xlabel(<span class="string">'time [s]'</span>);
+
+  animate(sol,times);
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> varsfun(sh)
+
+  sh.addState(<span class="string">'p'</span>, <span class="string">'lb'</span>, -5, <span class="string">'ub'</span>, 5);
+  sh.addState(<span class="string">'theta'</span>, <span class="string">'lb'</span>, -2*pi, <span class="string">'ub'</span>, 2*pi);
+  sh.addState(<span class="string">'v'</span>);
+  sh.addState(<span class="string">'omega'</span>);
+
+  sh.addState(<span class="string">'time'</span>, <span class="string">'lb'</span>, 0, <span class="string">'ub'</span>, 10);
+
+  sh.addControl(<span class="string">'F'</span>, <span class="string">'lb'</span>, -12, <span class="string">'ub'</span>, 12);
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> daefun(sh,x,~,u,~)
+
+  g = 9.8;
+  cm = 1.0;
+  pm = 0.1;
+  phl = 0.5; <span class="comment">% pole half length</span>
+
+  m = cm+pm;
+  pml = pm*phl; <span class="comment">% pole mass length</span>
+
+  ctheta = cos(x.theta);
+  stheta = sin(x.theta);
+
+  domega = (g*stheta + <span class="keyword">...</span>
+            ctheta * (-u.F-pml*x.omega^2*stheta) / m) / <span class="keyword">...</span>
+            (phl * (4.0 / 3.0 - pm * ctheta^2 / m));
+
+  a = (u.F + pml*(x.omega^2*stheta-domega*ctheta)) / m;
+
+  sh.setODE(<span class="string">'p'</span>,x.v);
+  sh.setODE(<span class="string">'theta'</span>,x.omega);
+  sh.setODE(<span class="string">'v'</span>,a);
+  sh.setODE(<span class="string">'omega'</span>,domega);
+
+  sh.setODE(<span class="string">'time'</span>, 1);
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> pointcosts(self,k,K,x,~)
+  <span class="keyword">if</span> k == K
+    self.add( x.time );
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> handles = animate(sol,times,snap)
+
+  handles = {};
+  pmax = max(abs(sol.states.p.value));
+
+  states = sol.integrator.states.value;
+  times = times.integrator.value;
+  times = times(:);
+
+  snap_at = floor(linspace(2,length(times),4));
+
+  <span class="keyword">for</span> k=2:length(times)
+    t = times(k);
+    x = states(:,k);
+    dt = t-times(k-1);
+
+    handles = draw(t, dt, x, [0,0,0,0], pmax, handles);
+
+    <span class="comment">% record image for docs</span>
+    <span class="keyword">if</span> k == snap_at(1)
+      snapnow;
+      snap_at = snap_at(2:end);
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> handles = draw(time, dt, x, Xref, pmax, handles)
+  p = x(1);
+  theta = x(2);
+  t = time;
+
+  l = 1.0;
+  ms = 10;
+
+  <span class="keyword">if</span> isempty(handles)
+
+    figure;
+
+    hold <span class="string">on</span>;
+    x_target = Xref(1);
+    y_target = 0;
+
+    line([-pmax pmax], [0 0], <span class="string">'color'</span>, <span class="string">'k'</span>, <span class="string">'Linewidth'</span>,1.5); hold <span class="string">on</span>;
+    line([-pmax -pmax], [-0.1 0.1], <span class="string">'color'</span>, <span class="string">'k'</span>, <span class="string">'Linewidth'</span>,1.5); hold <span class="string">on</span>;
+    line([pmax pmax], [-0.1 0.1], <span class="string">'color'</span>, <span class="string">'k'</span>, <span class="string">'Linewidth'</span>,1.5); hold <span class="string">on</span>;
+
+    plot(x_target, y_target, <span class="string">'x'</span>, <span class="string">'color'</span>, [38,124,185]/255, <span class="string">'MarkerSize'</span>, ms, <span class="string">'Linewidth'</span>, 2);
+    h2 = text(-0.3,pmax, <span class="string">'0.00 s'</span>,<span class="string">'FontSize'</span>,15);
+    h3 = plot(p,0,<span class="string">'ks'</span>,<span class="string">'MarkerSize'</span>,ms,<span class="string">'Linewidth'</span>,3);
+
+    xB = p-l*sin(theta);
+    yB = l*cos(theta);
+
+    h4 = line([p xB], [0 yB],<span class="string">'color'</span>,[38,124,185]/255,<span class="string">'Linewidth'</span>,2);
+    h5 = plot(xB,yB,<span class="string">'o'</span>, <span class="string">'color'</span>,[170,85,0]/255,<span class="string">'MarkerSize'</span>,ms,<span class="string">'Linewidth'</span>,3);
+
+    grid <span class="string">on</span>;
+    xlim([-pmax-l pmax+l]);
+    ylim([-pmax-l pmax+l]);
+
+    handles = {h2,h3,h4,h5};
+
+    hold <span class="string">off</span>;
+    pause(1)
+
+  <span class="keyword">else</span>
+    [h2,h3,h4,h5] = handles{:};
+
+    xB = p+l*sin(theta);
+    yB = l*cos(theta);
+
+    set(h2, <span class="string">'String'</span>, sprintf(<span class="string">'%.2f s'</span>, t));
+
+    set(h3, <span class="string">'Xdata'</span>, p)
+
+    set(h4,<span class="string">'Xdata'</span>,[p xB]);
+    set(h4,<span class="string">'Ydata'</span>,[0 yB]);
+
+    set(h5,<span class="string">'Xdata'</span>,xB);
+    set(h5,<span class="string">'Ydata'</span>,yB);
+  <span class="keyword">end</span>
+
+  <span class="keyword">global</span> testRun
+  <span class="keyword">if</span> isempty(testRun) || (testRun==false)
+    pause(dt);
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </pre><pre class="codeoutput">This is Ipopt version 3.12.3, running with linear solver mumps.
 NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
 
@@ -245,169 +389,210 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 105
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 101
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.446
-Total CPU secs in NLP function evaluations           =      0.021
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.424
+Total CPU secs in NLP function evaluations           =      0.033
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.467        0.467         1
+   my_solver        0.457        0.457         1
        nlp_f            0            0       137
-       nlp_g        0.018       0.0176       137
+       nlp_g            0            0       137
   nlp_grad_f            0            0        83
-  nlp_hess_l        0.001      0.00117        98
-   nlp_jac_g        0.001        0.001       106
-</pre><img vspace="5" hspace="5" src="index_01.png" alt=""> <img vspace="5" hspace="5" src="index_02.png" alt=""> <img vspace="5" hspace="5" src="index_03.png" alt=""> <img vspace="5" hspace="5" src="index_04.png" alt=""> <img vspace="5" hspace="5" src="index_05.png" alt=""> <h2 id="9">Multi-phase bouncing ball example</h2><pre class="error">File '../+ocl/+examples/bouncingball.m' not found.</pre><pre class="codeinput">ocl.examples.bouncingball;
-</pre><pre class="codeoutput">This is Ipopt version 3.12.3, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+  nlp_hess_l        0.033       0.0333        98
+   nlp_jac_g            0            0       106
+</pre><img vspace="5" hspace="5" src="cartpole_01.png" alt=""> <img vspace="5" hspace="5" src="cartpole_02.png" alt=""> <img vspace="5" hspace="5" src="cartpole_03.png" alt=""> <img vspace="5" hspace="5" src="cartpole_04.png" alt=""> <img vspace="5" hspace="5" src="cartpole_05.png" alt=""> <pre class="codeoutput">
+ans = 
 
-Number of nonzeros in equality constraint Jacobian...:      167
-Number of nonzeros in inequality constraint Jacobian.:        0
-Number of nonzeros in Lagrangian Hessian.............:       11
+OclAssignment with content:
+{
+ 
+Variable:
+  Size: [885 1]
+  Type: OclStructure
+  Children: states, integrator, controls, parameters, h
+  Value: [0;3.14159;0;0;0;0.000194271;3.14188;0.0674495;0.101166;0.00576136;0.0033617;3.14663;0.280536;0.420211;0.0239649;0.00808115;3.15369;0.434908;0.650148;0.0371578;12;0.0371578;0.00808115;3.15369;0.434908...
 
-Total number of variables............................:       56
-                     variables with only lower bounds:        3
-                variables with lower and upper bounds:        0
-                     variables with only upper bounds:        0
-Total number of equality constraints.................:       52
-Total number of inequality constraints...............:        0
-        inequality constraints with only lower bounds:        0
-   inequality constraints with lower and upper bounds:        0
-        inequality constraints with only upper bounds:        0
-
-iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
-   0 0.0000000e+000 3.33e+000 5.55e-016  -1.0 0.00e+000    -  0.00e+000 0.00e+000   0
-   1 7.5757955e-001 5.33e-001 7.39e-001  -1.0 2.00e+000    -  1.00e+000 1.00e+000h  1
-   2 2.7272864e-001 5.33e-001 1.01e+001  -1.7 4.00e+000    -  3.59e-001 1.00e+000h  1
-   3 4.0740944e-001 5.93e-002 1.78e+000  -1.7 1.33e+000    -  1.00e+000 1.00e+000h  1
-   4 4.2884843e-001 1.21e-003 7.34e-002  -1.7 1.90e-001    -  1.00e+000 1.00e+000h  1
-   5 4.2931055e-001 5.47e-007 1.85e-005  -2.5 4.05e-003    -  1.00e+000 1.00e+000h  1
-   6 4.2931076e-001 1.12e-013 4.73e-009  -3.8 1.84e-006    -  1.00e+000 1.00e+000h  1
-   7 4.2931076e-001 1.60e-015 1.84e-011  -5.7 3.77e-013    -  1.00e+000 1.00e+000h  1
-   8 4.2931076e-001 1.11e-015 2.52e-014  -8.6 9.12e-016    -  1.00e+000 1.00e+000   0
-
-Number of Iterations....: 8
-
-                                   (scaled)                 (unscaled)
-Objective...............:  4.2931076078557240e-001   4.2931076078557240e-001
-Dual infeasibility......:  2.5183551600961758e-014   2.5183551600961758e-014
-Constraint violation....:  1.1102230246251565e-015   1.1102230246251565e-015
-Complementarity.........:  2.5059035596804191e-009   2.5059035596804191e-009
-Overall NLP error.......:  2.5059035596804191e-009   2.5059035596804191e-009
-
-
-Number of objective function evaluations             = 9
-Number of objective gradient evaluations             = 9
-Number of equality constraint evaluations            = 9
-Number of inequality constraint evaluations          = 0
-Number of equality constraint Jacobian evaluations   = 9
-Number of inequality constraint Jacobian evaluations = 0
-Number of Lagrangian Hessian evaluations             = 8
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.016
-Total CPU secs in NLP function evaluations           =      0.000
-
-EXIT: Optimal Solution Found.
-               t_proc [s]   t_wall [s]    n_eval
-   my_solver        0.016       0.0156         1
-       nlp_f            0            0         9
-       nlp_g            0            0         9
-  nlp_grad_f            0            0        10
-  nlp_hess_l            0            0         8
-   nlp_jac_g            0            0        10
-Jacobian of the constraints
-</pre><img vspace="5" hspace="5" src="index_06.png" alt=""> <img vspace="5" hspace="5" src="index_07.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+}
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%% OpenOCL - Open Optimal Control Library
-% Software for optimal control, trajectory optimization, and
-% model predictive control.
-%
-% Web: <https://openocl.org/>
-%
-% API docs: <https://openocl.org/api-docs/>
-%
-%% Examples
-%
-% <html>
-% <ul>
-%   <li><a href="ballandbeam.html">Balancing a ball on a beam</a></li>
-%   <li><a href="bouncingball.html">Bouncing ball</a> (multi-stage)</li>
-%   <li><a href="cartpole.html">Cartpole swingup</a></li>
-%   <li><a href="pendulum_sim.html">Pendulum simulation in cartesian corrdinates</a></li>
-%   <li><a href="racecar.html">Optimal taking turns with a race-car</a></li>
-%   <li><a href="vanderpol.html">Van der Pol oszillator</a></li>
-% </ul>
-% </html>
-%
-%% Get help from the command line
-%
-% help ocl
-%
-%% Get started
-%
-% Run an example with:
-%   
-% <html><a href="matlab:ocl.examples.cartpole">ocl.examples.cartpole</a></html>
-% 
-% Get a list of all examples:
-%
-% <html><a href="matlab:help examples">help examples</a></html>
-%
-% Look at example code:
-%
-% <html><a href="matlab:open ocl.examples.cartpole">open ocl.examples.cartpole</a></html>
-% 
-%% List of optimal control examples
-% 
-% <html>
-% <ul>
-%   <li><a href="matlab:open ocl.examples.vanderpol">ocl.examples.vanderpol</a></li>
-%   <li><a href="matlab:open ocl.examples.ballandbeam">ocl.examples.ballandbeam</a></li>
-%   <li><a href="matlab:open ocl.examples.pendulum">ocl.examples.pendulum</a></li>
-%   <li><a href="matlab:open ocl.examples.racecar">ocl.examples.racecar</a></li>
-%   <li><a href="matlab:open ocl.examples.cartpole">ocl.examples.cartpole</a></li>
-%   <li><a href="matlab:open ocl.examples.bouncingball">ocl.examples.bouncingball</a> (multi-phase)</li>
-% </ul>
-% </html>
-%
-%% List of simulation examples
-%
-% <html>
-% <ul>
-%   <li><a href="matlab:open ocl.examples.pendulum_sim">ocl.examples.pendulum_sim</a></li>
-%   <li><a href="matlab:open ocl.examples.bouncingball_sim">ocl.examples.bouncingball_sim</a></li>
-% </ul>
-% </html>
-%
-%% List of classes
-%
-% <html>
-% <ul>
-%   <li><a href="matlab:open OclSystem">ocl.System</a> (OclSystem)</li>
-%   <li><a href="matlab:open OclOCP">ocl.OCP</a> (OclOCP)</li>
-%   <li><a href="matlab:open OclSolver">ocl.Solver</a> (OclSolver)</li>
-% </ul>
-% </html>
-%
-%% Copyright notice
-%
 % Copyright 2019 Jonas Koenemann, Moritz Diehl, University of Freiburg
 % Redistribution is permitted under the 3-Clause BSD License terms. Please
 % ensure the above copyright notice is visible in any derived work.
 %
-% Get the license text from:  
-%
-% <https://openocl.org/bsd-3-clause/>
-%
-%% Cartpole example
-%
-% <include>../+ocl/+examples/cartpole.m</include>
-%
-ocl.examples.cartpole;
-%
-%% Multi-phase bouncing ball example
-%
-% <include>../+ocl/+examples/bouncingball.m</include>
-%
-ocl.examples.bouncingball;
+function [sol,times,solver] = cartpole
+
+  solver = ocl.Solver([], 'vars', @varsfun, 'dae', @daefun, 'pointcosts', @pointcosts, 'N', 40, 'd', 3);
+
+  p0 = 0; v0 = 0;
+  theta0 = 180*pi/180; omega0 = 0;
+
+  solver.setInitialBounds('p', p0);
+  solver.setInitialBounds('v', v0);
+  solver.setInitialBounds('theta', theta0);
+  solver.setInitialBounds('omega', omega0);
+  
+  solver.setInitialBounds('time', 0);
+
+  solver.setEndBounds('p', 0);
+  solver.setEndBounds('v', 0);
+  solver.setEndBounds('theta', 0);
+  solver.setEndBounds('omega', 0);
+
+  % Run solver to obtain solution
+  [sol,times] = solver.solve(solver.ig());
+
+  % visualize solution
+  figure; hold on; grid on;
+  oclStairs(times.controls, sol.controls.F/10.)
+  xlabel('time [s]');
+  oclPlot(times.states, sol.states.p)
+  xlabel('time [s]');
+  oclPlot(times.states, sol.states.v)
+  xlabel('time [s]');
+  oclPlot(times.states, sol.states.theta)
+  legend({'force [10*N]','position [m]','velocity [m/s]','theta [rad]'})
+  xlabel('time [s]');
+
+  animate(sol,times);
+
+end
+
+function varsfun(sh)
+
+  sh.addState('p', 'lb', -5, 'ub', 5);
+  sh.addState('theta', 'lb', -2*pi, 'ub', 2*pi);
+  sh.addState('v');
+  sh.addState('omega');
+  
+  sh.addState('time', 'lb', 0, 'ub', 10);
+
+  sh.addControl('F', 'lb', -12, 'ub', 12);
+end
+
+function daefun(sh,x,~,u,~)
+
+  g = 9.8;
+  cm = 1.0;
+  pm = 0.1;
+  phl = 0.5; % pole half length
+
+  m = cm+pm;
+  pml = pm*phl; % pole mass length
+
+  ctheta = cos(x.theta);
+  stheta = sin(x.theta);
+
+  domega = (g*stheta + ...
+            ctheta * (-u.F-pml*x.omega^2*stheta) / m) / ...
+            (phl * (4.0 / 3.0 - pm * ctheta^2 / m));
+
+  a = (u.F + pml*(x.omega^2*stheta-domega*ctheta)) / m;
+
+  sh.setODE('p',x.v);
+  sh.setODE('theta',x.omega);
+  sh.setODE('v',a);
+  sh.setODE('omega',domega);
+  
+  sh.setODE('time', 1);
+  
+end
+
+function pointcosts(self,k,K,x,~)
+  if k == K
+    self.add( x.time );
+  end
+end
+
+function handles = animate(sol,times,snap)
+
+  handles = {};
+  pmax = max(abs(sol.states.p.value));
+  
+  states = sol.integrator.states.value;
+  times = times.integrator.value;
+  times = times(:);
+  
+  snap_at = floor(linspace(2,length(times),4));
+  
+  for k=2:length(times)
+    t = times(k);
+    x = states(:,k);
+    dt = t-times(k-1);
+    
+    handles = draw(t, dt, x, [0,0,0,0], pmax, handles);
+    
+    % record image for docs
+    if k == snap_at(1)
+      snapnow;
+      snap_at = snap_at(2:end);
+    end
+  end
+end
+
+function handles = draw(time, dt, x, Xref, pmax, handles)
+  p = x(1);
+  theta = x(2);
+  t = time;
+
+  l = 1.0;
+  ms = 10;
+
+  if isempty(handles)
+  
+    figure;
+
+    hold on;
+    x_target = Xref(1);
+    y_target = 0;
+
+    line([-pmax pmax], [0 0], 'color', 'k', 'Linewidth',1.5); hold on;
+    line([-pmax -pmax], [-0.1 0.1], 'color', 'k', 'Linewidth',1.5); hold on;
+    line([pmax pmax], [-0.1 0.1], 'color', 'k', 'Linewidth',1.5); hold on;
+
+    plot(x_target, y_target, 'x', 'color', [38,124,185]/255, 'MarkerSize', ms, 'Linewidth', 2);
+    h2 = text(-0.3,pmax, '0.00 s','FontSize',15);
+    h3 = plot(p,0,'ks','MarkerSize',ms,'Linewidth',3);
+
+    xB = p-l*sin(theta);
+    yB = l*cos(theta);
+
+    h4 = line([p xB], [0 yB],'color',[38,124,185]/255,'Linewidth',2);
+    h5 = plot(xB,yB,'o', 'color',[170,85,0]/255,'MarkerSize',ms,'Linewidth',3);
+
+    grid on;
+    xlim([-pmax-l pmax+l]);
+    ylim([-pmax-l pmax+l]);
+
+    handles = {h2,h3,h4,h5};
+
+    hold off;
+    pause(1)
+
+  else
+    [h2,h3,h4,h5] = handles{:};
+
+    xB = p+l*sin(theta);
+    yB = l*cos(theta);
+
+    set(h2, 'String', sprintf('%.2f s', t));
+
+    set(h3, 'Xdata', p)
+
+    set(h4,'Xdata',[p xB]);
+    set(h4,'Ydata',[0 yB]);
+
+    set(h5,'Xdata',xB);
+    set(h5,'Ydata',yB); 
+  end
+
+  global testRun
+  if isempty(testRun) || (testRun==false)
+    pause(dt);
+  end
+end
+
+
+
 
 ##### SOURCE END #####
 --></body></html>
