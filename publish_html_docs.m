@@ -17,5 +17,6 @@ rmdir(fullfile(oclPath,'+ocl','+examples','html'),'s')
 
 copyfile(fullfile(oclPath,'doc','helptoc.xml'), fullfile('html','helptoc.xml'));
 
+rmdir('docs','s')
 copyfile(fullfile('html','*'), 'docs')
 rmdir('html','s')

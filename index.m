@@ -8,9 +8,16 @@
 %
 %% Examples
 %
-% <html><a href="examples.html">Balancing ball on a beam</a></html>
-%
-% <html><a href="index.html">back</a></html>
+% <html>
+% <ul>
+%   <li><a href="ballandbeam.html">Balancing a ball on a beam</a></li>
+%   <li><a href="bouncing_ball.html">Bouncing ball</a> (multi-stage)</li>
+%   <li><a href="cartpole.html">Cartpole swingup</a></li>
+%   <li><a href="pendulum_sim.html">Pendulum simulation in cartesian corrdinates</a></li>
+%   <li><a href="racecar.html">Optimal taking turns with a race-car</a></li>
+%   <li><a href="vanderpol.html">Van der Pol oszillator</a></li>
+% </ul>
+% </html>
 %
 %% Get help from the command line
 %
