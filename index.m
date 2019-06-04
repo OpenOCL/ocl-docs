@@ -73,10 +73,12 @@
 %
 % <include>cartpole_src.m</include>
 %
+close all;
 ocl.examples.cartpole;
 %
 %% Multi-phase bouncing ball example
 %
 % <include>bouncingball_src.m</include>
 %
+close all;
 ocl.examples.bouncingball;
