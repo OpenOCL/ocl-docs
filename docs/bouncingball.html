@@ -82,7 +82,6 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
   [sol,times] = solver.solve(solver.getInitialGuess());
 
-  disp(<span class="string">'Jacobian of the constraints'</span>);
   figure
   spy(full(solver.jacobian_pattern(sol)))
 
@@ -188,18 +187,17 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 9
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 8
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.009
-Total CPU secs in NLP function evaluations           =      0.001
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.013
+Total CPU secs in NLP function evaluations           =      0.000
 
 EXIT: Optimal Solution Found.
                t_proc [s]   t_wall [s]    n_eval
-   my_solver         0.01      0.00999         1
+   my_solver        0.015        0.015         1
        nlp_f            0            0         9
        nlp_g            0            0         9
   nlp_grad_f            0            0        10
   nlp_hess_l            0            0         8
    nlp_jac_g            0            0        10
-Jacobian of the constraints
 
 ans = 
 
@@ -237,7 +235,6 @@ function [sol,times,solver] = bouncingball
 
   [sol,times] = solver.solve(solver.getInitialGuess());
 
-  disp('Jacobian of the constraints');
   figure
   spy(full(solver.jacobian_pattern(sol)))
   
