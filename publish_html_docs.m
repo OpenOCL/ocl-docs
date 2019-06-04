@@ -1,24 +1,28 @@
+global testRun
+close all
+testRun = true;
+
 oclPath  = fileparts(which('ocl'));
 
 publish('ocl.examples.vanderpol')
-snapnow;
+close all
 publish('ocl.examples.ballandbeam')
-snapnow;
+close all
 publish('ocl.examples.cartpole')
-snapnow;
+close all
 publish('ocl.examples.racecar')
-snapnow;
+close all
 publish('ocl.examples.bouncingball')
-snapnow;
+close all
 publish('ocl.examples.pendulum_sim')
-snapnow;
+close all
 publish('ocl.examples.bouncingball_sim')
-snapnow;
+close all
 
 publish('index')
-snapnow;
+close all
 publish('examples')
-snapnow;
+close all
 
 copyfile(fullfile(oclPath,'+ocl','+examples','html','*'), 'html')
 rmdir(fullfile(oclPath,'+ocl','+examples','html'),'s')
@@ -30,3 +34,5 @@ copyfile(fullfile('html','*'), 'docs')
 rmdir('html','s')
 
 copyfile(fullfile('docs','index.html'), fullfile(oclPath,'doc','index.html'))
+
+testRun = false;
